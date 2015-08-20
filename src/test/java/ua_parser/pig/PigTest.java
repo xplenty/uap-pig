@@ -29,6 +29,8 @@ public class PigTest extends TestCase {
         assertEquals("1",               (new ua_parser.pig.useragent.Minor()).exec(tuple));
         assertEquals(null,              (new ua_parser.pig.useragent.Patch()).exec(tuple));
 
+        assertEquals("Mobile",   		(new ua_parser.pig.platform.Family()).exec(tuple));
+        
         // Run the same set twice
         assertEquals("iPhone",          (new ua_parser.pig.device.Family()).exec(tuple));
 
@@ -42,6 +44,8 @@ public class PigTest extends TestCase {
         assertEquals("5",               (new ua_parser.pig.useragent.Major()).exec(tuple));
         assertEquals("1",               (new ua_parser.pig.useragent.Minor()).exec(tuple));
         assertEquals(null,              (new ua_parser.pig.useragent.Patch()).exec(tuple));
+        
+        assertEquals("Mobile",   		(new ua_parser.pig.platform.Family()).exec(tuple));
     }
 
     @Test
@@ -60,6 +64,8 @@ public class PigTest extends TestCase {
         assertEquals(null, (new ua_parser.pig.useragent.Minor()).exec(null));
         assertEquals(null, (new ua_parser.pig.useragent.Patch()).exec(null));
 
+        assertEquals(null, (new ua_parser.pig.platform.Family()).exec(null));
+        
     }
 
 }

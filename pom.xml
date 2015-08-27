@@ -4,7 +4,7 @@
 
 	<groupId>ua_parser</groupId>
 	<artifactId>ua-parser-pig</artifactId>
-	<version>0.5</version>
+	<version>0.6</version>
 	<packaging>jar</packaging>
 	<name>PIG UDFs for ua_parser</name>
 	<url>https://github.com/ua-parser/uap-pig</url>

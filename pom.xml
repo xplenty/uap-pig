@@ -4,7 +4,7 @@
 
 	<groupId>com.xplenty</groupId>
 	<artifactId>ua-parser-pig</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 	<packaging>jar</packaging>
 	<name>PIG UDFs for ua_parser</name>
 	<url>https://github.com/ua-parser/uap-pig</url>

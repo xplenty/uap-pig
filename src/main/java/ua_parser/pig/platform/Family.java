@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
 
-import ua_parser.Platform;
-import ua_parser.pig.PigParser;
+import ua_parser.legacy.Platform;
+import ua_parser.legacy.pig.PigParser;
 
 public class Family extends EvalFunc<String> {
 

@@ -1,7 +1,7 @@
-package ua_parser.pig;
+package ua_parser.legacy.pig;
 
-import ua_parser.OS;
-import ua_parser.UserAgent;
+import ua_parser.legacy.OS;
+import ua_parser.legacy.UserAgent;
 
 public class VersionUtil {
 	

@@ -1,13 +1,13 @@
-package ua_parser.pig.os;
+package ua_parser.legacy.pig.useragent;
 
 import java.io.IOException;
 
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
 
-import ua_parser.OS;
-import ua_parser.pig.PigParser;
-import ua_parser.pig.VersionUtil;
+import ua_parser.legacy.UserAgent;
+import ua_parser.legacy.pig.PigParser;
+import ua_parser.legacy.pig.VersionUtil;
 
 public class FullName extends EvalFunc<String> {
 
@@ -22,11 +22,11 @@ public class FullName extends EvalFunc<String> {
             return null;
         try {
             String agentString = (String) input.get(0);
-            OS os = parser.parseOS(agentString);
-            if (os == null) {
+            UserAgent userAgent = parser.parseUserAgent(agentString);
+            if (userAgent == null) {
                 return null;
             }
-            return VersionUtil.toFullNameString(os);
+            return VersionUtil.toFullNameString(userAgent);
         } catch (Exception e) {
             throw new IOException("Caught exception processing input row ", e);
         }

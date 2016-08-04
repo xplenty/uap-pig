@@ -1,32 +1,33 @@
-package ua_parser.pig.useragent;
+package ua_parser.legacy.pig.os;
 
 import java.io.IOException;
 
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
 
-import ua_parser.UserAgent;
-import ua_parser.pig.PigParser;
-import ua_parser.pig.VersionUtil;
+import ua_parser.legacy.OS;
+import ua_parser.legacy.pig.PigParser;
 
-public class FullName extends EvalFunc<String> {
+public class Minor extends EvalFunc<String> {
 
-    PigParser parser;
+    private PigParser parser;
 
-    public FullName() throws IOException {
+    public Minor() throws IOException {
         parser = PigParser.getParser();
     }
 
     public String exec(Tuple input) throws IOException {
-        if (input == null || input.size() == 0)
+        if (input == null || input.size() == 0) {
             return null;
+        }
+
         try {
             String agentString = (String) input.get(0);
-            UserAgent userAgent = parser.parseUserAgent(agentString);
-            if (userAgent == null) {
+            OS os = parser.parseOS(agentString);
+            if (os == null) {
                 return null;
             }
-            return VersionUtil.toFullNameString(userAgent);
+            return os.minor;
         } catch (Exception e) {
             throw new IOException("Caught exception processing input row ", e);
         }

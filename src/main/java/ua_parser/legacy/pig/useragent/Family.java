@@ -1,12 +1,12 @@
-package ua_parser.pig.useragent;
+package ua_parser.legacy.pig.useragent;
 
 import java.io.IOException;
 
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
 
-import ua_parser.UserAgent;
-import ua_parser.pig.PigParser;
+import ua_parser.legacy.UserAgent;
+import ua_parser.legacy.pig.PigParser;
 
 public class Family extends EvalFunc<String> {
 

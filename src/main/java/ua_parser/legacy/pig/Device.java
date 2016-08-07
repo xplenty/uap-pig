@@ -1,4 +1,4 @@
-package ua_parser.pig;
+package ua_parser.legacy.pig;
 
 import java.io.IOException;
 
@@ -9,11 +9,11 @@ import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
 import org.apache.pig.impl.logicalLayer.schema.Schema.FieldSchema;
 
-public class UserAgent extends EvalFunc<Tuple> {
+public class Device extends EvalFunc<Tuple> {
 
     private PigParser parser;
 
-    public UserAgent() throws IOException {
+    public Device() throws IOException {
         parser = PigParser.getParser();
     }
 
@@ -24,17 +24,12 @@ public class UserAgent extends EvalFunc<Tuple> {
 
         try {
             String agentString = (String) input.get(0);
-            ua_parser.UserAgent userAgent = parser.parseUserAgent(agentString);
-            if (userAgent == null) {
+            ua_parser.legacy.Device device = parser.parseDevice(agentString);
+            if (device == null) {
                 return null;
             }
-
-            Tuple output = TupleFactory.getInstance().newTuple(4);
-            output.set(0, userAgent.family);
-            output.set(1, userAgent.major);
-            output.set(2, userAgent.minor);
-            output.set(3, userAgent.patch);
-
+            Tuple output = TupleFactory.getInstance().newTuple(1);
+            output.set(0, device.family);
             return output;
         } catch (Exception e) {
             throw new IOException("Caught exception processing input row ", e);
@@ -45,11 +40,7 @@ public class UserAgent extends EvalFunc<Tuple> {
     public Schema outputSchema(Schema input) {
         try {
             Schema tupleSchema = new Schema();
-
-            tupleSchema.add(new FieldSchema("useragentFamily", DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("useragentMajor",  DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("useragentMinor",  DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("useragentPatch",  DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("deviceFamily", DataType.CHARARRAY));
             return tupleSchema;
         } catch (Exception e) {
             return null;

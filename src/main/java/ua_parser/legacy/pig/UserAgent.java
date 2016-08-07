@@ -1,4 +1,4 @@
-package ua_parser.pig;
+package ua_parser.legacy.pig;
 
 import java.io.IOException;
 
@@ -9,13 +9,11 @@ import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
 import org.apache.pig.impl.logicalLayer.schema.Schema.FieldSchema;
 
-import ua_parser.OS;
-
-public class Os extends EvalFunc<Tuple> {
+public class UserAgent extends EvalFunc<Tuple> {
 
     private PigParser parser;
 
-    public Os() throws IOException {
+    public UserAgent() throws IOException {
         parser = PigParser.getParser();
     }
 
@@ -26,17 +24,16 @@ public class Os extends EvalFunc<Tuple> {
 
         try {
             String agentString = (String) input.get(0);
-            OS os = parser.parseOS(agentString);
-            if (os == null) {
+            ua_parser.legacy.UserAgent userAgent = parser.parseUserAgent(agentString);
+            if (userAgent == null) {
                 return null;
             }
 
-            Tuple output = TupleFactory.getInstance().newTuple(5);
-            output.set(0, os.family);
-            output.set(1, os.major);
-            output.set(2, os.minor);
-            output.set(3, os.patch);
-            output.set(4, os.patchMinor);
+            Tuple output = TupleFactory.getInstance().newTuple(4);
+            output.set(0, userAgent.family);
+            output.set(1, userAgent.major);
+            output.set(2, userAgent.minor);
+            output.set(3, userAgent.patch);
 
             return output;
         } catch (Exception e) {
@@ -49,11 +46,10 @@ public class Os extends EvalFunc<Tuple> {
         try {
             Schema tupleSchema = new Schema();
 
-            tupleSchema.add(new FieldSchema("osFamily",     DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("osMajor",      DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("osMinor",      DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("osPatch",      DataType.CHARARRAY));
-            tupleSchema.add(new FieldSchema("osPatchMinor", DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("useragentFamily", DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("useragentMajor",  DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("useragentMinor",  DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("useragentPatch",  DataType.CHARARRAY));
             return tupleSchema;
         } catch (Exception e) {
             return null;

@@ -1,8 +1,8 @@
-package ua_parser.pig;
+package ua_parser.legacy.pig;
 
 import java.io.IOException;
 
-import ua_parser.CachingParser;
+import ua_parser.legacy.CachingParser;
 
 /**
  * Pig is the canonical use case for processing massive volumes of clickstream

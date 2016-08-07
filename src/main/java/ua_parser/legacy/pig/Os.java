@@ -1,4 +1,4 @@
-package ua_parser.pig;
+package ua_parser.legacy.pig;
 
 import java.io.IOException;
 
@@ -9,11 +9,13 @@ import org.apache.pig.data.TupleFactory;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
 import org.apache.pig.impl.logicalLayer.schema.Schema.FieldSchema;
 
-public class Device extends EvalFunc<Tuple> {
+import ua_parser.legacy.OS;
+
+public class Os extends EvalFunc<Tuple> {
 
     private PigParser parser;
 
-    public Device() throws IOException {
+    public Os() throws IOException {
         parser = PigParser.getParser();
     }
 
@@ -24,12 +26,18 @@ public class Device extends EvalFunc<Tuple> {
 
         try {
             String agentString = (String) input.get(0);
-            ua_parser.Device device = parser.parseDevice(agentString);
-            if (device == null) {
+            OS os = parser.parseOS(agentString);
+            if (os == null) {
                 return null;
             }
-            Tuple output = TupleFactory.getInstance().newTuple(1);
-            output.set(0, device.family);
+
+            Tuple output = TupleFactory.getInstance().newTuple(5);
+            output.set(0, os.family);
+            output.set(1, os.major);
+            output.set(2, os.minor);
+            output.set(3, os.patch);
+            output.set(4, os.patchMinor);
+
             return output;
         } catch (Exception e) {
             throw new IOException("Caught exception processing input row ", e);
@@ -40,7 +48,12 @@ public class Device extends EvalFunc<Tuple> {
     public Schema outputSchema(Schema input) {
         try {
             Schema tupleSchema = new Schema();
-            tupleSchema.add(new FieldSchema("deviceFamily", DataType.CHARARRAY));
+
+            tupleSchema.add(new FieldSchema("osFamily",     DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("osMajor",      DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("osMinor",      DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("osPatch",      DataType.CHARARRAY));
+            tupleSchema.add(new FieldSchema("osPatchMinor", DataType.CHARARRAY));
             return tupleSchema;
         } catch (Exception e) {
             return null;
